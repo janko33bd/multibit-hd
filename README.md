@@ -1,3 +1,14 @@
+First buld [blackcoinj-perta](https://github.com/janko33bd/blackcoinj-petra)
+then build multiblack from root directory
+
+```
+mvn clean install -Dmaven.test.skip=true
+```
+
+which will produce executable jar in your target directory named multiblack-hd.jar
+
+###DONATE:
+###B6vsjwa1nMvn3qJbuZy11EAcv2D2c6Qftf
 
 Build status: [![Build Status](https://travis-ci.org/bitcoin-solutions/multibit-hd.png?branch=develop)](https://travis-ci.org/bitcoin-solutions/multibit-hd)
 
