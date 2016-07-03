@@ -12,6 +12,7 @@ import org.multibit.hd.ui.views.components.panels.PanelDecorator;
 import org.multibit.hd.ui.views.components.select_backup_summary.SelectBackupSummaryModel;
 import org.multibit.hd.ui.views.components.select_backup_summary.SelectBackupSummaryView;
 import org.multibit.hd.ui.views.fonts.AwesomeIcon;
+import org.multibit.hd.ui.views.fonts.CryptoCoinsIcon;
 import org.multibit.hd.ui.views.wizards.AbstractWizard;
 import org.multibit.hd.ui.views.wizards.AbstractWizardPanelView;
 import org.multibit.hd.ui.views.wizards.WizardButton;
@@ -40,7 +41,7 @@ public class RestoreWalletSelectBackupPanelView extends AbstractWizardPanelView<
    */
   public RestoreWalletSelectBackupPanelView(AbstractWizard<WelcomeWizardModel> wizard, String panelName) {
 
-    super(wizard, panelName, AwesomeIcon.BITCOIN, MessageKey.RESTORE_WALLET_SELECT_BACKUP_TITLE);
+    super(wizard, panelName, CryptoCoinsIcon.BLACKCOIN, MessageKey.RESTORE_WALLET_SELECT_BACKUP_TITLE);
 
   }
 

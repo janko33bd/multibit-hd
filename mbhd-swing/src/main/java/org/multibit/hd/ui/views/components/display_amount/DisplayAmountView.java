@@ -123,7 +123,7 @@ public class DisplayAmountView extends AbstractComponentView<DisplayAmountModel>
     LanguageConfiguration languageConfiguration = configuration.getLanguage();
     BitcoinConfiguration bitcoinConfiguration = configuration.getBitcoin();
 
-    ExchangeKey exchangeKey = ExchangeKey.valueOf(bitcoinConfiguration.getCurrentExchange());
+    ExchangeKey exchangeKey = ExchangeKey.NONE;
 
     // The exchange rate provider can override the intention of the local amount visibility
     if (ExchangeKey.NONE.equals(exchangeKey)) {

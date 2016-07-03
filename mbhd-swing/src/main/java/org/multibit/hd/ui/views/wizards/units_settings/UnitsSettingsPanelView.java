@@ -19,6 +19,7 @@ import org.multibit.hd.ui.views.components.display_amount.DisplayAmountStyle;
 import org.multibit.hd.ui.views.components.display_amount.DisplayAmountView;
 import org.multibit.hd.ui.views.components.panels.PanelDecorator;
 import org.multibit.hd.ui.views.fonts.AwesomeIcon;
+import org.multibit.hd.ui.views.fonts.CryptoCoinsIcon;
 import org.multibit.hd.ui.views.wizards.AbstractWizard;
 import org.multibit.hd.ui.views.wizards.AbstractWizardPanelView;
 import org.multibit.hd.ui.views.wizards.WizardButton;
@@ -53,7 +54,7 @@ public class UnitsSettingsPanelView extends AbstractWizardPanelView<UnitsWizardM
    */
   public UnitsSettingsPanelView(AbstractWizard<UnitsWizardModel> wizard, String panelName) {
 
-    super(wizard, panelName, AwesomeIcon.BITCOIN, MessageKey.SHOW_UNITS_WIZARD);
+    super(wizard, panelName, CryptoCoinsIcon.BLACKCOIN, MessageKey.SHOW_UNITS_WIZARD);
 
   }
 

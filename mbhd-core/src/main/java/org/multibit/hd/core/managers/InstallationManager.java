@@ -35,7 +35,7 @@ public class InstallationManager {
   /**
    * The main MultiBit download site (HTTPS)
    */
-  public static final URI MBHD_WEBSITE_URI = URI.create("https://multibit.org");
+  public static final URI MBHD_WEBSITE_URI = URI.create("https://google.com");
 
   /**
    * The main MultiBit help site (HTTPS to allow secure connection without redirect, with fall back to local help on failure)
@@ -43,12 +43,12 @@ public class InstallationManager {
   public static final String MBHD_WEBSITE_HELP_DOMAIN = "https://multibit.org";
   public static final String MBHD_WEBSITE_HELP_BASE = MBHD_WEBSITE_HELP_DOMAIN + "/hd0.3";
 
-  public static final String MBHD_APP_NAME = "MultiBitHD";
+  public static final String MBHD_APP_NAME = "MultiBlackHD";
   public static final String MBHD_PREFIX = "mbhd";
   public static final String MBHD_CONFIGURATION_FILE = MBHD_PREFIX + ".yaml";
 
-  public static final String SPV_BLOCKCHAIN_SUFFIX = ".spvchain";
-  public static final String CHECKPOINTS_SUFFIX = ".checkpoints";
+  public static final String SPV_BLOCKCHAIN_SUFFIX = ".blkchain";
+  public static final String CHECKPOINTS_SUFFIX = ".blkchain";
   public static final String CA_CERTS_NAME = MBHD_PREFIX + "-cacerts";
 
   /**

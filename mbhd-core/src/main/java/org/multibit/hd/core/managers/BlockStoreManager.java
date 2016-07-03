@@ -7,7 +7,9 @@ import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.StoredBlock;
 import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
-import org.bitcoinj.store.SPVBlockStore;
+import org.bitcoinj.store.FullPrunedBlockStore;
+import org.bitcoinj.store.MemoryFullPrunedBlockStore;
+import org.blackcoinj.store.H2MVStoreFullPrunedBlockstore;
 import org.joda.time.DateTime;
 import org.multibit.commons.utils.Dates;
 import org.slf4j.Logger;
@@ -54,50 +56,36 @@ public class BlockStoreManager {
    * @throws BlockStoreException
    * @throws IOException
    */
-  public BlockStore createOrOpenBlockStore(File blockStoreFile, File checkpointsFile, DateTime checkpointDate, boolean createNew) throws BlockStoreException, IOException {
+  public FullPrunedBlockStore createOrOpenBlockStore(File blockStoreFile, File checkpointsFile, DateTime checkpointDate, boolean createNew) throws BlockStoreException, IOException {
 
-    boolean blockStoreCreatedNew = deleteBlockStoreIfRequired(createNew, blockStoreFile);
+    //boolean blockStoreCreatedNew = deleteBlockStoreIfRequired(createNew, blockStoreFile);
 
     log.debug("Get or create SPV block store:\n'{}'", blockStoreFile.getAbsolutePath());
-    BlockStore blockStore;
-    try {
-      blockStore = new SPVBlockStore(networkParameters, blockStoreFile);
-    } catch (BlockStoreException bse) {
-      try {
-        log.warn("Failed to get or create SPV block store", bse.getMessage());
-        // If the block store creation failed, delete the block store file and try again.
-        blockStoreCreatedNew = deleteBlockStoreIfRequired(true, blockStoreFile);
+    FullPrunedBlockStore blockStore;
+    blockStore = new H2MVStoreFullPrunedBlockstore(networkParameters, blockStoreFile.getPath());
 
-        blockStore = new SPVBlockStore(networkParameters, blockStoreFile);
-      } catch (BlockStoreException bse2) {
-        log.error("Unrecoverable failure in opening block store. This is bad.", bse2.getMessage());
-        // Throw the exception so that it is indicated on the UI
-        throw bse2;
-      }
-    }
-
-    log.debug("Block store in place. Created new: {}", blockStoreCreatedNew);
+    log.debug("Block store in place. Created new: {}", blockStore);
 
     // Load the existing checkpoint file and checkpoint from today.
-    if (checkpointsFile.exists()) {
-
-      log.debug("Checkpoints exist attempting to stream from:\n'{}'", checkpointsFile.getAbsolutePath());
-
-      try (FileInputStream checkpointsInputStream = new FileInputStream(checkpointsFile)) {
-
-        Preconditions.checkNotNull(checkpointsInputStream, "'stream' must be present");
-
-        if (checkpointDate == null) {
-          if (blockStoreCreatedNew) {
-            // Brand new block store
-            CheckpointManager.checkpoint(networkParameters, checkpointsInputStream, blockStore, Dates.nowInSeconds());
-          }
-        } else {
-          // Use manager's date (block replay).
-          CheckpointManager.checkpoint(networkParameters, checkpointsInputStream, blockStore, checkpointDate.getMillis() / 1000);
-        }
-      }
-    }
+//    if (checkpointsFile.exists()) {
+//
+//      log.debug("Checkpoints exist attempting to stream from:\n'{}'", checkpointsFile.getAbsolutePath());
+//
+//      try (FileInputStream checkpointsInputStream = new FileInputStream(checkpointsFile)) {
+//
+//        Preconditions.checkNotNull(checkpointsInputStream, "'stream' must be present");
+//
+//        if (checkpointDate == null) {
+//          if (blockStoreCreatedNew) {
+//            // Brand new block store
+//            CheckpointManager.checkpoint(networkParameters, checkpointsInputStream, blockStore, Dates.nowInSeconds());
+//          }
+//        } else {
+//          // Use manager's date (block replay).
+//          CheckpointManager.checkpoint(networkParameters, checkpointsInputStream, blockStore, checkpointDate.getMillis() / 1000);
+//        }
+//      }
+//    }
 
     return blockStore;
   }
@@ -111,7 +99,7 @@ public class BlockStoreManager {
    *
    * @throws BlockStoreException
    * @throws IOException
-   */
+   
   public BlockStore createOrOpenBlockStore(File blockStoreFile, Stack<StoredBlock> storedBlockStack, boolean createNew) throws BlockStoreException, IOException {
 
     boolean blockStoreCreatedNew = deleteBlockStoreIfRequired(createNew, blockStoreFile);
@@ -159,7 +147,7 @@ public class BlockStoreManager {
     log.debug("Block store in place. Created new: {}", blockStoreCreatedNew);
 
     return blockStore;
-  }
+  }*/
 
   @SuppressFBWarnings({"DM_GC"})
   private boolean deleteBlockStoreIfRequired(boolean createNew, File blockStoreFile) {

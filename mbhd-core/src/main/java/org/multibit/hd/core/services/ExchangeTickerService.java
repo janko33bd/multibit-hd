@@ -73,7 +73,7 @@ public class ExchangeTickerService extends AbstractService {
 
     super();
 
-    this.exchangeKey = ExchangeKey.valueOf(bitcoinConfiguration.getCurrentExchange());
+    this.exchangeKey = ExchangeKey.NONE;
     this.localCurrency = Currency.getInstance(bitcoinConfiguration.getLocalCurrencyCode());
 
     // Check for a real exchange
@@ -250,16 +250,16 @@ public class ExchangeTickerService extends AbstractService {
             return getEmptyTicker();
           }
 
-          if (ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey)) {
-
-            // Triangulate through USD to reach exchange rate
-            return getTriangulatedTicker();
-
-          } else {
+//          if (ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey)) {
+//
+//            // Triangulate through USD to reach exchange rate
+//            return getTriangulatedTicker();
+//
+//          } else {
 
             // Crypto-exchange is straightforward
             return getDirectTicker();
-          }
+//          }
         }
 
         private Ticker getDirectTicker() throws IOException {
@@ -271,36 +271,36 @@ public class ExchangeTickerService extends AbstractService {
 
         }
 
-        private Ticker getTriangulatedTicker() throws IOException {
-
-          log.debug("OER triangulated ticker");
-
-          CurrencyPair localToUsdPair = new CurrencyPair(exchangeCounterCode, "USD");
-          CurrencyPair bitcoinToUsdPair = new CurrencyPair("BTC", "USD");
-
-          // Need to triangulate through USD
-          Ticker inverseLocalToUsdTicker = exchange.get().getPollingMarketDataService().getTicker(localToUsdPair);
-          Ticker inverseBitcoinToUsdTicker = exchange.get().getPollingMarketDataService().getTicker(bitcoinToUsdPair);
-
-          // OER gives inverse values to reduce number of calculations
-          BigDecimal inverseLocalToUsd = inverseLocalToUsdTicker.getLast();
-          BigDecimal inverseBitcoinToUsd = inverseBitcoinToUsdTicker.getLast();
-
-          // Conversion rate is inverse local divided by inverse Bitcoin
-          BigDecimal conversionRate = inverseLocalToUsd.divide(inverseBitcoinToUsd, RoundingMode.HALF_EVEN);
-
-          // Infer the ticker
-          return Ticker.TickerBuilder.newInstance()
-            .withLast(conversionRate)
-              // All others are zero
-            .withAsk(BigDecimal.ZERO)
-            .withBid(BigDecimal.ZERO)
-            .withHigh(BigDecimal.ZERO)
-            .withLow(BigDecimal.ZERO)
-            .withCurrencyPair(bitcoinToUsdPair)
-            .withVolume(BigDecimal.ONE)
-            .build();
-        }
+//        private Ticker getTriangulatedTicker() throws IOException {
+//
+//          log.debug("OER triangulated ticker");
+//
+//          CurrencyPair localToUsdPair = new CurrencyPair(exchangeCounterCode, "USD");
+//          CurrencyPair bitcoinToUsdPair = new CurrencyPair("BTC", "USD");
+//
+//          // Need to triangulate through USD
+//          Ticker inverseLocalToUsdTicker = exchange.get().getPollingMarketDataService().getTicker(localToUsdPair);
+//          Ticker inverseBitcoinToUsdTicker = exchange.get().getPollingMarketDataService().getTicker(bitcoinToUsdPair);
+//
+//          // OER gives inverse values to reduce number of calculations
+//          BigDecimal inverseLocalToUsd = inverseLocalToUsdTicker.getLast();
+//          BigDecimal inverseBitcoinToUsd = inverseBitcoinToUsdTicker.getLast();
+//
+//          // Conversion rate is inverse local divided by inverse Bitcoin
+//          BigDecimal conversionRate = inverseLocalToUsd.divide(inverseBitcoinToUsd, RoundingMode.HALF_EVEN);
+//
+//          // Infer the ticker
+//          return Ticker.TickerBuilder.newInstance()
+//            .withLast(conversionRate)
+//              // All others are zero
+//            .withAsk(BigDecimal.ZERO)
+//            .withBid(BigDecimal.ZERO)
+//            .withHigh(BigDecimal.ZERO)
+//            .withLow(BigDecimal.ZERO)
+//            .withCurrencyPair(bitcoinToUsdPair)
+//            .withVolume(BigDecimal.ONE)
+//            .build();
+//        }
 
         private Ticker getEmptyTicker() throws IOException {
 

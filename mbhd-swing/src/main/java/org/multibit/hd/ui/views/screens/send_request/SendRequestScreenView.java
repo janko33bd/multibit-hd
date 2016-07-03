@@ -50,6 +50,7 @@ public class SendRequestScreenView extends AbstractScreenView<SendRequestScreenM
 
   private JButton sendBitcoin;
   private JButton requestBitcoin;
+  private JButton stakeBlackcoin;
 
   private ModelAndView<DisplayPaymentsModel, DisplayPaymentsView> displaySendingPaymentsMaV;
 
@@ -102,19 +103,31 @@ public class SendRequestScreenView extends AbstractScreenView<SendRequestScreenM
         Panels.showLightBox(Wizards.newRequestBitcoinWizard().getWizardScreenHolder());
       }
     };
+    
+    Action stakeBlackCoinWizardAction = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+          Panels.showLightBox(Wizards.newStakeBitcoinWizard().getWizardScreenHolder());
+        }
+      };
 
     sendBitcoin = Buttons.newSendBitcoinWizardButton(showSendBitcoinWizardAction);
 
     requestBitcoin = Buttons.newRequestBitcoinWizardButton(showRequestBitcoinWizardAction);
+    
+    stakeBlackcoin = Buttons.newStakeBlackcoinWizardButton(stakeBlackCoinWizardAction);
 
     if (InstallationManager.unrestricted) {
       // Start with enabled buttons and use Bitcoin network status to modify
       sendBitcoin.setEnabled(true);
       requestBitcoin.setEnabled(true);
+      stakeBlackcoin.setEnabled(true);
     } else {
       // Start with disabled button and use Bitcoin network status to modify
       sendBitcoin.setEnabled(false);
       requestBitcoin.setEnabled(false);
+      stakeBlackcoin.setEnabled(false);
     }
 
     // Initialise panel with a blank list of today's sending payments
@@ -151,9 +164,10 @@ public class SendRequestScreenView extends AbstractScreenView<SendRequestScreenM
     contentPanel.add(Labels.newBlankLabel(), "width 47%,pushx,wrap");
 
     contentPanel.add(sendBitcoin, MultiBitUI.LARGE_BUTTON_MIG + ",align center");
+    contentPanel.add(stakeBlackcoin, MultiBitUI.LARGE_BUTTON_MIG + ",align center");
     contentPanel.add(Panels.newVerticalDashedSeparator(), "growy,spany 2");
     contentPanel.add(requestBitcoin, MultiBitUI.LARGE_BUTTON_MIG + ",align center,wrap");
-
+    
     contentPanel.add(sendingPaymentsScrollPane, "grow,push");
     contentPanel.add(requestingPaymentsScrollPane, "grow,push,wrap");
 
@@ -314,6 +328,7 @@ public class SendRequestScreenView extends AbstractScreenView<SendRequestScreenM
           public void run() {
             sendBitcoin.setEnabled(finalNewEnabled);
             requestBitcoin.setEnabled(finalNewEnabled);
+            stakeBlackcoin.setEnabled(finalNewEnabled);
           }
         });
       }

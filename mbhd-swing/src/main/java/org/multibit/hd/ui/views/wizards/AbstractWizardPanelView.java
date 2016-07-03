@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import org.multibit.hd.core.events.CoreEvents;
 import org.multibit.hd.core.events.EnvironmentEvent;
 import org.multibit.hd.core.services.CoreServices;
+import org.multibit.hd.ui.MultiBitUI;
 import org.multibit.hd.ui.events.view.ComponentChangedEvent;
 import org.multibit.hd.ui.events.view.ViewEvents;
 import org.multibit.hd.ui.events.view.WizardButtonEnabledEvent;
@@ -19,6 +20,7 @@ import org.multibit.hd.ui.views.components.display_environment_alert.DisplayEnvi
 import org.multibit.hd.ui.views.components.display_environment_alert.DisplayEnvironmentAlertView;
 import org.multibit.hd.ui.views.components.panels.PanelDecorator;
 import org.multibit.hd.ui.views.fonts.AwesomeIcon;
+import org.multibit.hd.ui.views.fonts.CryptoCoinsIcon;
 import org.multibit.hd.ui.views.themes.NimbusDecorator;
 import org.multibit.hd.ui.views.themes.Themes;
 import org.slf4j.Logger;
@@ -153,6 +155,43 @@ public abstract class AbstractWizardPanelView<M extends AbstractWizardModel, P> 
 
   }
 
+  public AbstractWizardPanelView(AbstractWizard<M> wizard, String panelName, CryptoCoinsIcon backgroundIcon,
+		  MessageKey titleKey,
+		    Object... values) {
+
+	    Preconditions.checkNotNull(wizard, "'wizard' must be present");
+	    Preconditions.checkNotNull(titleKey, "'title' must be present");
+
+	    this.wizardModel = wizard.getWizardModel();
+	    this.panelName = panelName;
+
+	    // All wizard panel views can receive Core and View events
+	    ViewEvents.subscribe(this);
+	    CoreEvents.subscribe(this);
+
+	    // All wizard screen panels are decorated with the same theme and
+	    // layout at creation so just need a simple panel to begin with
+	    wizardScreenPanel = Panels.newRoundedPanel();
+
+	    // All wizard panels require a backing model
+	    newPanelModel();
+
+	    // Create a new wizard panel and apply the wizard theme
+	    PanelDecorator.applyWizardTheme(wizardScreenPanel);
+
+	    // Add the title to the wizard
+	    title = Labels.newTitleLabel(titleKey, values);
+	    wizardScreenPanel.add(title, "span 4," + MultiBitUI.WIZARD_MAX_WIDTH_MIG + ",gap 0, shrink 200,aligny top,align center,h 90lp!,wrap");
+
+	    // Provide a basic empty content panel (allows lazy initialisation later)
+	    contentPanel = Panels.newDetailBackgroundPanel(backgroundIcon);
+
+	    // Add it to the wizard panel as a placeholder
+	    wizardScreenPanel.add(contentPanel, "span 4,grow,push,wrap");
+
+	    // Add the buttons to the wizard
+	    initialiseButtons(wizard);
+}
   /**
    * <p>The wizard is closing so unsubscribe</p>
    */

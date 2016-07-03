@@ -164,6 +164,12 @@ public class Wizards {
     log.debug("New 'About wizard'");
     return new AboutWizard(new AboutWizardModel(AboutState.ABOUT_DETAILS));
   }
+  
+  public static StakeBlackcoinWizard newStakeBitcoinWizard() {
+	  log.debug("New 'Stake blackcoin wizard'");
+
+	    return new StakeBlackcoinWizard(new StakeBlackcoinWizardModel(StakeBlackcoinState.START));
+	}
 
   /**
    * @param parameter Providing information about how the send should be performed

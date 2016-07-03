@@ -35,7 +35,7 @@ public class MultiBitPeerEventListener implements PeerEventListener {
   }
 
   @Override
-  public void onBlocksDownloaded(Peer peer, Block block, FilteredBlock filteredBlock, int blocksLeft) {
+  public void onBlocksDownloaded(Peer peer, Block block, int blocksLeft) {
     if (blocksLeft > originalBlocksLeft) {
       originalBlocksLeft = blocksLeft;
     }

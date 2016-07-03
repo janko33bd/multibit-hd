@@ -117,7 +117,7 @@ public class ExchangeSettingsPanelView extends AbstractWizardPanelView<ExchangeS
     apiKeyLabel = Labels.newApiKey();
 
     // API key visibility
-    boolean isOERExchange = ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey);
+    boolean isOERExchange = false;
 
     // API key value
     Map<String, String> exchangeApiKeys = bitcoinConfiguration.getExchangeApiKeys();
@@ -260,7 +260,7 @@ public class ExchangeSettingsPanelView extends AbstractWizardPanelView<ExchangeS
       if (apiKeyTextField.isVisible() && !Strings.isNullOrEmpty(apiKeyTextField.getText())) {
 
         BitcoinConfiguration bitcoinConfiguration = getWizardModel().getConfiguration().getBitcoin();
-        bitcoinConfiguration.getExchangeApiKeys().put(ExchangeKey.OPEN_EXCHANGE_RATES.name(), apiKeyTextField.getText());
+        //bitcoinConfiguration.getExchangeApiKeys().put(ExchangeKey.OPEN_EXCHANGE_RATES.name(), apiKeyTextField.getText());
 
       }
 
@@ -320,13 +320,13 @@ public class ExchangeSettingsPanelView extends AbstractWizardPanelView<ExchangeS
         }
 
         final URI exchangeUri;
-        if (ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey)) {
-          // Ensure MultiBit customers go straight to the free API key page with referral
-          exchangeUri = URI.create("https://openexchangerates.org/signup/free?r=multibit");
-        } else {
+//        if (ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey)) {
+//          // Ensure MultiBit customers go straight to the free API key page with referral
+//          exchangeUri = URI.create("https://openexchangerates.org/signup/free?r=multibit");
+//        } else {
           // All other exchanges go to the main host (not API root)
           exchangeUri = URI.create("http://" + exchangeKey.getExchange().get().getExchangeSpecification().getHost());
-        }
+//        }
 
         // Attempt to open the URI
         if (!SafeDesktop.browse(exchangeUri)) {
@@ -367,24 +367,26 @@ public class ExchangeSettingsPanelView extends AbstractWizardPanelView<ExchangeS
       // Hide the spinner since its related component is not visible
       tickerSpinner.setVisible(false);
 
-    } else if (ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey)) {
-
-      // Allow exchange browsing
-      exchangeRateProviderBrowserButton.setEnabled(true);
-
-      // Show the API key
-      setApiKeyVisibility(true);
-
-      // Hide the currency code if the API key is not present
-      setCurrencyCodeVisibility(!Strings.isNullOrEmpty(apiKeyTextField.getText()));
-
-      // Hide the ticker verification
-      tickerVerifiedStatus.setVisible(false);
-
-      // Show the spinner so the user knows something is happening
-      tickerSpinner.setVisible(true);
-
-    } else {
+    } 
+//    else if (ExchangeKey.OPEN_EXCHANGE_RATES.equals(exchangeKey)) {
+//
+//      // Allow exchange browsing
+//      exchangeRateProviderBrowserButton.setEnabled(true);
+//
+//      // Show the API key
+//      setApiKeyVisibility(true);
+//
+//      // Hide the currency code if the API key is not present
+//      setCurrencyCodeVisibility(!Strings.isNullOrEmpty(apiKeyTextField.getText()));
+//
+//      // Hide the ticker verification
+//      tickerVerifiedStatus.setVisible(false);
+//
+//      // Show the spinner so the user knows something is happening
+//      tickerSpinner.setVisible(true);
+//
+//    } 
+    else {
 
       // Allow exchange browsing
       exchangeRateProviderBrowserButton.setEnabled(true);
@@ -609,7 +611,7 @@ public class ExchangeSettingsPanelView extends AbstractWizardPanelView<ExchangeS
         boolean notEmpty = apiKeyTextField.getText().length() > 0;
 
         // Update the wizard model so that the ticker can be tested if a currency combo selection is made
-        getWizardModel().getConfiguration().getBitcoin().getExchangeApiKeys().put(ExchangeKey.OPEN_EXCHANGE_RATES.name(), apiKeyTextField.getText());
+        //getWizardModel().getConfiguration().getBitcoin().getExchangeApiKeys().put(ExchangeKey.OPEN_EXCHANGE_RATES.name(), apiKeyTextField.getText());
 
         // Handle currency combo
         setCurrencyCodeVisibility(notEmpty);
@@ -688,7 +690,7 @@ public class ExchangeSettingsPanelView extends AbstractWizardPanelView<ExchangeS
     if (visible) {
       // Ensure we use the current API key setting (currently only OER supported)
       BitcoinConfiguration bitcoinConfiguration = getWizardModel().getConfiguration().getBitcoin();
-      apiKeyTextField.setText(bitcoinConfiguration.getExchangeApiKeys().get(ExchangeKey.OPEN_EXCHANGE_RATES.name()));
+      //apiKeyTextField.setText(bitcoinConfiguration.getExchangeApiKeys().get(ExchangeKey.OPEN_EXCHANGE_RATES.name()));
     }
   }
 

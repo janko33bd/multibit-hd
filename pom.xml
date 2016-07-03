@@ -316,9 +316,9 @@
 
     <!-- bitcoinj alice fork -->
     <dependency>
-      <groupId>org.bitcoinj</groupId>
-      <artifactId>bitcoinj-core</artifactId>
-      <version>0.13.3-alice-0.2.1-SNAPSHOT</version>
+      <groupId>org.blackcoinj</groupId>
+      <artifactId>blackcoinj-core</artifactId>
+      <version>0.13.3-petra</version>
     </dependency>
 
     <!-- BRIT Core for managing income -->

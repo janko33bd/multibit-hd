@@ -38,7 +38,7 @@ public class MultiBitPeerEventListenerTest {
     test = true;
 
     // Simulate blocks left of 150/200 (expect 25% event to be emitted)
-    testObject.onBlocksDownloaded(null, null, null, 150);
+    testObject.onBlocksDownloaded(null, null, 150);
 
   }
 

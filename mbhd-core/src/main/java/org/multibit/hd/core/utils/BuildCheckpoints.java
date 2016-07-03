@@ -69,7 +69,7 @@ public class BuildCheckpoints {
         final PeerGroup peerGroup = new PeerGroup(PARAMS, chain);
         peerGroup.addPeerDiscovery(new DnsDiscovery(PARAMS));
         long now = new Date().getTime() / 1000;
-        peerGroup.setFastCatchupTimeSecs(now);
+        //peerGroup.setFastCatchupTimeSecs(now);
 
         final long oneMonthAgo = now - (86400 * 30);
 

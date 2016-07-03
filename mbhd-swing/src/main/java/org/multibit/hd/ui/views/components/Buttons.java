@@ -6,6 +6,8 @@ import org.multibit.hd.ui.languages.Languages;
 import org.multibit.hd.ui.languages.MessageKey;
 import org.multibit.hd.ui.views.fonts.AwesomeDecorator;
 import org.multibit.hd.ui.views.fonts.AwesomeIcon;
+import org.multibit.hd.ui.views.fonts.CryptoCoinsDecorator;
+import org.multibit.hd.ui.views.fonts.CryptoCoinsIcon;
 import org.multibit.hd.ui.views.themes.NimbusDecorator;
 import org.multibit.hd.ui.views.themes.Themes;
 
@@ -939,12 +941,12 @@ public class Buttons {
 
     JButton button = newLargeButton(action, MessageKey.SHOW_UNITS_WIZARD, MessageKey.SHOW_UNITS_WIZARD_TOOLTIP);
 
-    AwesomeDecorator.applyIcon(
-      AwesomeIcon.BITCOIN,
-      button,
-      true,
-      JLabel.BOTTOM,
-      MultiBitUI.LARGE_ICON_SIZE
+    CryptoCoinsDecorator.applyIcon(
+    	      CryptoCoinsIcon.BLACKCOIN,
+    	      button,
+    	      true,
+    	      JLabel.BOTTOM,
+    	      MultiBitUI.LARGE_ICON_SIZE
     );
 
     return button;
@@ -1269,6 +1271,21 @@ public class Buttons {
     AwesomeDecorator.applyIcon(AwesomeIcon.BUG, button, true, MultiBitUI.NORMAL_ICON_SIZE);
 
     return button;
+  }
+  
+  /**
+   * @param action The click action
+   *
+   * @return A new "Stake Blackcoin" wizard button with icon
+   */
+  public static JButton newStakeBlackcoinWizardButton(Action action) {
+
+    JButton button = newLargeButton(action, MessageKey.SHOW_STAKE_WIZARD, MessageKey.SHOW_STAKE_WIZARD_TOOLTIP);
+
+    AwesomeDecorator.applyIcon(AwesomeIcon.ROCKET, button, true, JLabel.BOTTOM, MultiBitUI.LARGE_ICON_SIZE);
+
+    return button;
+
   }
 
 }

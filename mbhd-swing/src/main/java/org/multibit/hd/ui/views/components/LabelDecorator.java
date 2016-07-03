@@ -14,6 +14,8 @@ import org.multibit.hd.ui.languages.MessageKey;
 import org.multibit.hd.ui.utils.HtmlUtils;
 import org.multibit.hd.ui.views.fonts.AwesomeDecorator;
 import org.multibit.hd.ui.views.fonts.AwesomeIcon;
+import org.multibit.hd.ui.views.fonts.CryptoCoinsDecorator;
+import org.multibit.hd.ui.views.fonts.CryptoCoinsIcon;
 import org.multibit.hd.ui.views.themes.Themes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,19 +89,19 @@ public class LabelDecorator {
       case ICON:
         label.setText(leadingText);
         label.setIconTextGap(0);
-        AwesomeDecorator.applyIcon(AwesomeIcon.BITCOIN, label, false, fontSize);
+        CryptoCoinsDecorator.applyIcon(CryptoCoinsIcon.BLACKCOIN, label, false, fontSize);
         label.setHorizontalTextPosition(horizontalTextPosition);
         break;
       case MICON:
         label.setText(leadingText + symbol.getSymbol());
         label.setIconTextGap(-2);
-        AwesomeDecorator.applyIcon(AwesomeIcon.BITCOIN, label, false, fontSize);
+        CryptoCoinsDecorator.applyIcon(CryptoCoinsIcon.BLACKCOIN, label, false, fontSize);
         label.setHorizontalTextPosition(horizontalTextPosition);
         break;
       case UICON:
         label.setText(leadingText + symbol.getSymbol());
         label.setIconTextGap(-2);
-        AwesomeDecorator.applyIcon(AwesomeIcon.BITCOIN, label, false, fontSize);
+        CryptoCoinsDecorator.applyIcon(CryptoCoinsIcon.BLACKCOIN, label, false, fontSize);
         label.setHorizontalTextPosition(horizontalTextPosition);
         break;
       default:

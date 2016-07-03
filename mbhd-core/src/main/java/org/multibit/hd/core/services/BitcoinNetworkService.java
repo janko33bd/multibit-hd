@@ -19,8 +19,11 @@ import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.script.Script;
 import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
+import org.bitcoinj.store.FullPrunedBlockStore;
 import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.KeyChain;
+import org.blackcoinj.pos.BlackcoinMagic;
+import org.blackcoinj.pos.Staker;
 import org.joda.time.DateTime;
 import org.multibit.commons.files.SecureFiles;
 import org.multibit.hd.core.config.Configurations;
@@ -83,10 +86,14 @@ public class BitcoinNetworkService extends AbstractService {
    */
   private static final int MINING_FEE_BOUNDARY = 1000;  // bytes
 
-  private BlockStore blockStore;
+  private FullPrunedBlockStore blockStore;
   private PeerGroup peerGroup;
-  private BlockChain blockChain;
-  private MultiBitPeerEventListener peerEventListener;
+  private FullPrunedBlockChain blockChain;
+  private Staker staker;
+  private boolean staking = false;
+  
+
+private MultiBitPeerEventListener peerEventListener;
 
   private final NetworkParameters networkParameters;
 
@@ -164,9 +171,9 @@ public class BitcoinNetworkService extends AbstractService {
    * @param replayConfig              ReplayHints giving the date or stored block to use for replay
    *                                 if not present then no checkpointing is done and te blockstore is simply opened
    */
-  public BlockStore openBlockStore(File applicationDataDirectory, ReplayConfig replayConfig) {
+  public FullPrunedBlockStore openBlockStore(File applicationDataDirectory, ReplayConfig replayConfig) {
 
-    BlockStore blockStoreToReturn = null;
+    FullPrunedBlockStore blockStoreToReturn = null;
     try {
       // Check if there is a wallet - if there is no wallet the network will not start (there's nowhere to put the blockchain)
       if (!WalletManager.INSTANCE.getCurrentWalletSummary().isPresent()) {
@@ -176,26 +183,26 @@ public class BitcoinNetworkService extends AbstractService {
       File walletParentDirectory = WalletManager.INSTANCE.getCurrentWalletFile(applicationDataDirectory).get().getParentFile();
 
       File blockStoreFile = SecureFiles.verifyOrCreateFile(walletParentDirectory, InstallationManager.MBHD_PREFIX + InstallationManager.SPV_BLOCKCHAIN_SUFFIX);
-      File checkpointsFile = SecureFiles.verifyOrCreateFile(walletParentDirectory, InstallationManager.MBHD_PREFIX + InstallationManager.CHECKPOINTS_SUFFIX);
-
-      if (replayConfig.getReplayDate().isPresent()) {
-        // Create a block store and checkpoint it using the replay date
-        log.debug("Create new block store - using replay date");
-        blockStoreToReturn = new BlockStoreManager(networkParameters).createOrOpenBlockStore(blockStoreFile, checkpointsFile, replayConfig.getReplayDate().get(), true);
-      } else {
-        if (replayConfig.getReplayStoredBlockStack().isPresent()) {
-          // Create a blockstore using the StoredBlockStack
-          blockStoreToReturn = new BlockStoreManager(networkParameters).createOrOpenBlockStore(blockStoreFile, replayConfig.getReplayStoredBlockStack().get(), true);
-        } else {
-          // Load or create the blockStore - no checkpointing or storedBlock used
-          log.debug("Create new block store - no replay date or storedBlock");
-          blockStoreToReturn = new BlockStoreManager(networkParameters).createOrOpenBlockStore(blockStoreFile, checkpointsFile, null, false);
-          log.debug(
-            "Success. Blockstore is '{}', height is {}",
-            blockStoreToReturn,
-            blockStoreToReturn.getChainHead() == null ? "Unknown" : blockStoreToReturn.getChainHead().getHeight());
-        }
-      }
+      //File checkpointsFile = SecureFiles.verifyOrCreateFile(walletParentDirectory, InstallationManager.MBHD_PREFIX + InstallationManager.CHECKPOINTS_SUFFIX);
+      blockStoreToReturn = new BlockStoreManager(networkParameters).createOrOpenBlockStore(blockStoreFile, null, null, false);
+//      if (replayConfig.getReplayDate().isPresent()) {
+//        // Create a block store and checkpoint it using the replay date
+//        log.debug("Create new block store - using replay date");
+//        blockStoreToReturn = new BlockStoreManager(networkParameters).createOrOpenBlockStore(blockStoreFile, checkpointsFile, replayConfig.getReplayDate().get(), true);
+//      } else {
+//        if (replayConfig.getReplayStoredBlockStack().isPresent()) {
+//          // Create a blockstore using the StoredBlockStack
+//          blockStoreToReturn = new BlockStoreManager(networkParameters).createOrOpenBlockStore(blockStoreFile, replayConfig.getReplayStoredBlockStack().get(), true);
+//        } else {
+//          // Load or create the blockStore - no checkpointing or storedBlock used
+//          log.debug("Create new block store - no replay date or storedBlock");
+//          
+//          log.debug(
+//            "Success. Blockstore is '{}', height is {}",
+//            blockStoreToReturn,
+//            blockStoreToReturn.getChainHead() == null ? "Unknown" : blockStoreToReturn.getChainHead().getHeight());
+//        }
+//      }
 
     } catch (IOException | BlockStoreException e) {
       log.error("Block store could not be opened", e.getMessage());
@@ -222,26 +229,26 @@ public class BitcoinNetworkService extends AbstractService {
     return startedOk;
   }
 
-  public void recalculateFastCatchupAndFilter(boolean wait) {
-
-    if (peerGroup != null) {
-      ListenableFuture<BloomFilter> bloomFilterFuture = peerGroup.recalculateFastCatchupAndFilter(PeerGroup.FilterRecalculateMode.FORCE_SEND_FOR_REFRESH);
-
-      if (wait) {
-        try {
-          bloomFilterFuture.get(1, TimeUnit.SECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
-          log.error("Bloom filter construction failed with error {}", e.getMessage());
-        }
-
-        // Wait one second for the remote peer to process the new BloomFilter
-        Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
-
-      }
-
-      log.debug("Status of BloomFilterFuture after 1 second:{}", bloomFilterFuture.isDone());
-    }
-  }
+//  public void recalculateFastCatchupAndFilter(boolean wait) {
+//
+//    if (peerGroup != null) {
+//      //ListenableFuture<BloomFilter> bloomFilterFuture = peerGroup.recalculateFastCatchupAndFilter(PeerGroup.FilterRecalculateMode.FORCE_SEND_FOR_REFRESH);
+//
+//      if (wait) {
+//        try {
+//          //bloomFilterFuture.get(1, TimeUnit.SECONDS);
+//        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+//          log.error("Bloom filter construction failed with error {}", e.getMessage());
+//        }
+//
+//        // Wait one second for the remote peer to process the new BloomFilter
+//        Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
+//
+//      }
+//
+//      log.debug("Status of BloomFilterFuture after 1 second:{}", bloomFilterFuture.isDone());
+//    }
+//  }
 
   /**
    * <p>Download the block chain in a new thread</p>
@@ -255,8 +262,8 @@ public class BitcoinNetworkService extends AbstractService {
           Preconditions.checkNotNull(peerGroup, "'peerGroup' must be present");
 
           // Recalculate the bloom filter before every sync
-          log.debug("Recalculating bloom filter ...");
-          recalculateFastCatchupAndFilter(true);
+//          log.debug("Recalculating bloom filter ...");
+//          recalculateFastCatchupAndFilter(true);
 
           log.debug("Downloading block chain...");
 
@@ -386,35 +393,35 @@ public class BitcoinNetworkService extends AbstractService {
       return Optional.absent();
     }
 
-    try {
-      StoredBlock cursor = blockStore.getChainHead();
-      if (cursor == null) {
-        // No chainHead so cannot search back in time
-        log.debug("No chainhead");
+//    try {
+//      StoredBlock cursor = blockStore.getChainHead();
+//      if (cursor == null) {
+//        // No chainHead so cannot search back in time
+//        log.debug("No chainhead");
+//        return Optional.absent();
+//      } else {
+//        while (cursor != null) {
+//          if (cursor.getHeader().getTime().before(replayDateTime.get().toDate())) {
+//            // Found a stored block with time earlier than replay date
+//            // Copy to a stack the snippet of blockchain from earliest known to just before cursor
+//            // Check that there is a difficulty transition
+//            Stack<StoredBlock> storedBlockStack = pushStoredBlocksToCursorAndCheckDifficulty(cursor);
+//            return Optional.fromNullable(storedBlockStack);
+//          }
+//
+//          // Find the previous header (will be null once blockstore is exhausted)
+//          cursor = cursor.getPrev(blockStore);
+//        }
+//
+//        // Could not find stored block before replay date
+//        log.debug("No stored block available before replay date");
+//
         return Optional.absent();
-      } else {
-        while (cursor != null) {
-          if (cursor.getHeader().getTime().before(replayDateTime.get().toDate())) {
-            // Found a stored block with time earlier than replay date
-            // Copy to a stack the snippet of blockchain from earliest known to just before cursor
-            // Check that there is a difficulty transition
-            Stack<StoredBlock> storedBlockStack = pushStoredBlocksToCursorAndCheckDifficulty(cursor);
-            return Optional.fromNullable(storedBlockStack);
-          }
-
-          // Find the previous header (will be null once blockstore is exhausted)
-          cursor = cursor.getPrev(blockStore);
-        }
-
-        // Could not find stored block before replay date
-        log.debug("No stored block available before replay date");
-
-        return Optional.absent();
-      }
-    } catch (BlockStoreException bse) {
-      // Something bad happened accessing the block store so give up search
-      return Optional.absent();
-    }
+//      }
+//    } catch (BlockStoreException bse) {
+//      // Something bad happened accessing the block store so give up search
+//      return Optional.absent();
+//    }
   }
 
   /**
@@ -1398,11 +1405,10 @@ public class BitcoinNetworkService extends AbstractService {
    */
   private void createNewPeerGroup(Wallet wallet, boolean useFastCatchup) throws TimeoutException {
     String[] dnsSeeds = new String[]{
-                     /* "seed.bitcoin.sipa.be",        // Pieter Wuille - not reachable */
-      "dnsseed.bluematt.me",         // Matt Corallo
-      "dnsseed.bitcoin.dashjr.org",  // Luke Dashjr
-      "seed.bitcoinstats.com",       // Chris Decker
-      "seed.bitnodes.io",            // Addy Yeow
+    		BlackcoinMagic.dnsSeed0,       
+    		BlackcoinMagic.dnsSeed1,  
+    		BlackcoinMagic.dnsSeed2,
+    		BlackcoinMagic.dnsSeed3
     };
     log.info("Creating new DNS peer group for '{}'", networkParameters);
     peerGroup = new PeerGroup(networkParameters, blockChain);
@@ -1415,7 +1421,7 @@ public class BitcoinNetworkService extends AbstractService {
       Configurations.currentConfiguration.getCurrentVersion());
 
     peerGroup.setMaxConnections(MAXIMUM_NUMBER_OF_PEERS);
-    peerGroup.setUseLocalhostPeerWhenPossible(true);
+    //peerGroup.setUseLocalhostPeerWhenPossible(true);
 
     peerEventListener = new MultiBitPeerEventListener();
     peerGroup.addEventListener(peerEventListener);
@@ -1428,11 +1434,11 @@ public class BitcoinNetworkService extends AbstractService {
       log.trace("Adding wallet {} to peerGroup {}", wallet, peerGroup);
       peerGroup.addWallet(wallet);
       if (useFastCatchup) {
-        peerGroup.setFastCatchupTimeSecs(wallet.getEarliestKeyCreationTime());
+        //peerGroup.setFastCatchupTimeSecs(wallet.getEarliestKeyCreationTime());
       } else {
-        peerGroup.setFastCatchupTimeSecs(0); // Download full blocks always
+        //peerGroup.setFastCatchupTimeSecs(0); // Download full blocks always
       }
-      recalculateFastCatchupAndFilter(false);
+      //recalculateFastCatchupAndFilter(false);
     } else {
       log.debug("Could not add wallet to peerGroup - one or more is missing");
     }
@@ -1555,7 +1561,7 @@ public class BitcoinNetworkService extends AbstractService {
    * @throws IOException                           If the network fails
    * @throws java.util.concurrent.TimeoutException If the Tor connection fails
    */
-  private void restartNetwork(BlockStore blockStore, boolean useFastCatchup) throws BlockStoreException, IOException, TimeoutException {
+  private void restartNetwork(FullPrunedBlockStore blockStore, boolean useFastCatchup) throws BlockStoreException, IOException, TimeoutException {
 
     Preconditions.checkNotNull(blockStore, "'blockStore' must be present");
 
@@ -1564,7 +1570,7 @@ public class BitcoinNetworkService extends AbstractService {
     CoreEvents.fireBitcoinNetworkChangedEvent(BitcoinNetworkSummary.newNetworkNotInitialised());
 
     log.debug("Creating block chain from blockStore {}...", blockStore);
-    blockChain = new BlockChain(networkParameters, blockStore);
+    blockChain = new FullPrunedBlockChain(networkParameters, blockStore);
 
     Wallet wallet = null;
     if (WalletManager.INSTANCE.getCurrentWalletSummary().isPresent()) {
@@ -1622,8 +1628,20 @@ public class BitcoinNetworkService extends AbstractService {
   public void setLastWalletOptional(Optional<Wallet> lastWalletOptional) {
     this.lastWalletOptional = lastWalletOptional;
   }
+  
+  public void startStaking(){
+	  staking = true;
+	  staker = new Staker(networkParameters, peerGroup, WalletManager.INSTANCE.getCurrentWalletSummary().get().getWallet(), getBlockStore(), blockChain);
+	  staker.startAsync();
+  }
+  
+  public void stopStaking(){
+	  staking = false;
+	  staker.stopAsync();
+	  staker.awaitTerminated();
+  }
 
-  public BlockStore getBlockStore() {
+  public FullPrunedBlockStore getBlockStore() {
     return blockStore;
   }
 
@@ -1634,4 +1652,12 @@ public class BitcoinNetworkService extends AbstractService {
       return peerGroup.numConnectedPeers();
     }
   }
+  
+  public Staker getStaker() {
+		return staker;
+	}
+
+public boolean isStaking() {
+	return staking;
+}
 }

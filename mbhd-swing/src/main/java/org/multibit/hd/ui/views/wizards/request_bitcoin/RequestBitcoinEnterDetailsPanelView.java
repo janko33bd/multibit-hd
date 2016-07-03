@@ -128,7 +128,7 @@ public class RequestBitcoinEnterDetailsPanelView extends AbstractWizardPanelView
       BitcoinNetworkService bitcoinNetworkService = CoreServices.getOrCreateBitcoinNetworkService();
       Preconditions.checkState(bitcoinNetworkService.isStartedOk(), "'bitcoinNetworkService' should be started OK");
 
-      bitcoinNetworkService.recalculateFastCatchupAndFilter(false);
+      //bitcoinNetworkService.recalculateFastCatchupAndFilter(false);
     }
 
     displayBitcoinAddressMaV = Components.newDisplayBitcoinAddressMaV(nextAddressToShow);
@@ -239,7 +239,7 @@ public class RequestBitcoinEnterDetailsPanelView extends AbstractWizardPanelView
     final FiatPayment fiatPayment = new FiatPayment();
     fiatPayment.setAmount(enterAmountMaV.getModel().getLocalAmount());
 
-    final ExchangeKey exchangeKey = ExchangeKey.current();
+    final ExchangeKey exchangeKey = ExchangeKey.NONE;
     fiatPayment.setExchangeName(Optional.of(exchangeKey.getExchangeName()));
 
     final Optional<ExchangeRateChangedEvent> exchangeRateChangedEvent = CoreServices.getApplicationEventService().getLatestExchangeRateChangedEvent();

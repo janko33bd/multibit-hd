@@ -733,7 +733,7 @@ public class WalletService extends AbstractService {
     log.trace("Calculating fiat amount of {}", amountBTC);
 
     // Work it out from the current settings
-    amountFiat.setExchangeName(Optional.of(ExchangeKey.current().getExchangeName()));
+    amountFiat.setExchangeName(Optional.of(ExchangeKey.NONE.getExchangeName()));
 
     if (CoreServices.getApplicationEventService() != null) {
       Optional<ExchangeRateChangedEvent> exchangeRateChangedEvent = CoreServices.getApplicationEventService().getLatestExchangeRateChangedEvent();
@@ -1683,7 +1683,7 @@ public class WalletService extends AbstractService {
 
       // Create the fiat payment
       FiatPayment amountFiat = new FiatPayment();
-      amountFiat.setExchangeName(Optional.of(ExchangeKey.current().getExchangeName()));
+      amountFiat.setExchangeName(Optional.of(ExchangeKey.NONE.getExchangeName()));
 
       if (CoreServices.getApplicationEventService() != null) {
         Optional<ExchangeRateChangedEvent> exchangeRateChangedEvent = CoreServices.getApplicationEventService().getLatestExchangeRateChangedEvent();

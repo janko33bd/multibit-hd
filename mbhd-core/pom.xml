@@ -174,12 +174,12 @@
     <!--<version>${xchange.version}</version>-->
     <!--</dependency>-->
 
-    <!-- XChange BitBay exchange support -->
+    <!-- XChange BitBay exchange support
     <dependency>
     <groupId>com.xeiam.xchange</groupId>
     <artifactId>xchange-bitbay</artifactId>
     <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
     <!-- XChange Bitcoin Charts exchange support -->
     <!-- Not an exchange but an aggregator of market data -->
@@ -196,19 +196,19 @@
     <!--<version>${xchange.version}</version>-->
     <!--</dependency>-->
 
-    <!-- XChange BitCurex exchange support -->
+    <!-- XChange BitCurex exchange support 
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-bitcurex</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency>-->
 
-    <!-- XChange BitFinex exchange support -->
+    <!-- XChange BitFinex exchange support 
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-bitfinex</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency>-->
 
     <!-- XChange Bitkonan exchange support -->
     <!-- No market rates at 2.1.0 -->
@@ -218,27 +218,27 @@
       <!--<version>${xchange.version}</version>-->
     <!--</dependency>-->
 
-    <!-- XChange Bit Market exchange support -->
+    <!-- XChange Bit Market exchange support 
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-bitmarket</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency>-->
 
-    <!-- XChange Bitstamp exchange support -->
+    <!-- XChange Bitstamp exchange support
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-bitstamp</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
     <!-- XChange Bittrex exchange support -->
     <!-- No market rates at 2.1.0 -->
-    <!--<dependency>-->
-      <!--<groupId>com.xeiam.xchange</groupId>-->
-      <!--<artifactId>xchange-bittrex</artifactId>-->
-      <!--<version>${xchange.version}</version>-->
-    <!--</dependency>-->
+    <dependency>
+      <groupId>com.xeiam.xchange</groupId>
+      <artifactId>xchange-bittrex</artifactId>
+      <version>${xchange.version}</version>
+    </dependency>
 
     <!-- XChange Bitvc exchange support -->
     <!-- No exchange URL in 2.1.0 -->
@@ -264,61 +264,61 @@
     <!--<version>${xchange.version}</version>-->
     <!--</dependency>-->
 
-    <!-- XChange BTCChina exchange support -->
+    <!-- XChange BTCChina exchange support
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-btcchina</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
-    <!-- XChange BTC-E exchange support -->
+    <!-- XChange BTC-E exchange support 
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-btce</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency>-->
 
-    <!-- XChange BTCTrade exchange support -->
+    <!-- XChange BTCTrade exchange support 
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-btctrade</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency>-->
 
-    <!-- XChange BTER exchange support -->
+    <!-- XChange BTER exchange support
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-bter</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
-    <!-- XChange Cavirtex exchange support -->
+    <!-- XChange Cavirtex exchange support
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-cavirtex</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
-    <!-- XChange CampBX exchange support -->
+    <!-- XChange CampBX exchange support
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-campbx</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
-    <!-- XChange CEXIO exchange support -->
+    <!-- XChange CEXIO exchange support
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-cexio</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
-    <!-- XChange Coinbase exchange support -->
+    <!-- XChange Coinbase exchange support 
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-coinbase</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency>-->
 
     <!-- XChange Coinsetter exchange support -->
     <!-- No 2.1.0 release -->
@@ -336,12 +336,12 @@
       <!--<version>${xchange.version}</version>-->
     <!--</dependency>-->
 
-    <!-- XChange Coinsetter exchange support -->
+    <!-- XChange Coinsetter exchange support
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-cryptonit</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
     <!-- XChange Cryptotrade exchange support -->
     <!-- Out of business -->
@@ -359,12 +359,12 @@
       <!--<version>${xchange.version}</version>-->
     <!--</dependency>-->
 
-    <!-- XChange HitBTC exchange support -->
+    <!-- XChange HitBTC exchange support
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-hitbtc</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
     <!-- XChange ItBit exchange support -->
     <!-- No working feeds at 2.1.0 -->
@@ -382,26 +382,26 @@
       <!--<version>${xchange.version}</version>-->
     <!--</dependency>-->
 
-    <!-- XChange Kraken exchange support -->
+    <!-- XChange Kraken exchange support 
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-kraken</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency>-->
 
-    <!-- XChange Lake BTC support -->
+    <!-- XChange Lake BTC support
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-lakebtc</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency> -->
 
-    <!-- XChange Open Exchange Rates support -->
+    <!-- XChange Open Exchange Rates support 
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-openexchangerates</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency>-->
 
     <!-- XChange Mintpal support -->
     <!-- Feed broken at 2.1.0 -->
@@ -411,12 +411,12 @@
       <!--<version>${xchange.version}</version>-->
     <!--</dependency>-->
 
-    <!-- XChange OK Coin support -->
+    <!-- XChange OK Coin support 
     <dependency>
       <groupId>com.xeiam.xchange</groupId>
       <artifactId>xchange-okcoin</artifactId>
       <version>${xchange.version}</version>
-    </dependency>
+    </dependency>-->
 
     <!-- XChange Poloniex support -->
     <!-- No working feed at 2.1.0 -->

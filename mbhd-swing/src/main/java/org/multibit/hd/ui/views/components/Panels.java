@@ -18,6 +18,8 @@ import org.multibit.hd.ui.views.components.panels.PanelDecorator;
 import org.multibit.hd.ui.views.components.panels.RoundedPanel;
 import org.multibit.hd.ui.views.fonts.AwesomeDecorator;
 import org.multibit.hd.ui.views.fonts.AwesomeIcon;
+import org.multibit.hd.ui.views.fonts.CryptoCoinsDecorator;
+import org.multibit.hd.ui.views.fonts.CryptoCoinsIcon;
 import org.multibit.hd.ui.views.themes.Themes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -977,5 +979,28 @@ public class Panels {
     }
 
   }
+  
+  public static JPanel newDetailBackgroundPanel(CryptoCoinsIcon backgroundIcon) {
+		// Create an image from the AwesomeIcon
+	    Image image = ImageDecorator.toImageIcon(
+	    		CryptoCoinsDecorator.createIcon(
+	    		  backgroundIcon,
+	        Themes.currentTheme.fadedText(),
+	        MultiBitUI.HUGE_ICON_SIZE
+	      )).getImage();
 
+	    BackgroundPanel panel = new BackgroundPanel(image, BackgroundPanel.ACTUAL);
+
+	    panel.setLayout(
+	      new MigLayout(
+	        Panels.migXLayout(),
+	        "[]", // Columns
+	        "[]" // Rows
+	      ));
+	    panel.setAlpha(MultiBitUI.DETAIL_PANEL_BACKGROUND_ALPHA);
+	    panel.setPaint(Themes.currentTheme.detailPanelBackground());
+	    panel.setBackground(Themes.currentTheme.detailPanelBackground());
+
+	    return panel;
+  }
 }

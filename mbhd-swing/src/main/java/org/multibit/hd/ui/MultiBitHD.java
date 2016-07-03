@@ -327,7 +327,7 @@ public class MultiBitHD {
     if (OSUtils.isMac()) {
       log.debug("Applying OSX key bindings...");
       // Ensure the correct name is displayed in the application menu
-      System.setProperty("com.apple.mrj.application.apple.menu.about.name", "multiBit HD");
+      System.setProperty("com.apple.mrj.application.apple.menu.about.name", "multiBlack HD");
 
       // Ensure OSX key bindings are used for copy, paste etc
       // Use the Nimbus keys and ensure this occurs before any component creation

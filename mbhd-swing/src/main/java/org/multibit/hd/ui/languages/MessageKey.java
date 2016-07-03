@@ -969,6 +969,12 @@ public enum MessageKey {
   KEEP_KEY_SIGN_MESSAGE_CONFIRM_DISPLAY("keepkey_sign_message_confirm_display"),
   KEEP_KEY_WIPE_CONFIRM_DISPLAY("keepkey_wipe_confirm_display"),
   KEEP_KEY_HIGH_FEE_CONFIRM_DISPLAY("keepkey_high_fee_confirm_display"),
+  
+  SHOW_STAKE_WIZARD("show_stake_wizard"),
+  SHOW_STAKE_WIZARD_TOOLTIP("show_stake_wizard_tooltip"),
+  DISPLAY_STAKE_BLACKCOIN_TITLE("display_stake_blackcoin_title"), 
+  STAKE("stake"), 
+  STAKE_TOOLTIP("begin_staking"),
 
   // End of enum
   ;
