@@ -266,7 +266,7 @@
                 </transformer>
               </transformers>
               <!-- This entry links to the installer configurations -->
-              <finalName>multibit-hd</finalName>
+              <finalName>multiblack-hd</finalName>
             </configuration>
           </execution>
         </executions>
