@@ -105,7 +105,7 @@ public class SettingsScreenView extends AbstractScreenView<SettingsScreenModel> 
     // Row 1
     contentPanel.add(showLanguageSettingsWizardButton, MultiBitUI.LARGE_BUTTON_MIG + ",align center,push");
     contentPanel.add(Buttons.newShowUnitsSettingsWizardButton(showBitcoinAction), MultiBitUI.LARGE_BUTTON_MIG + ",align center, push");
-    contentPanel.add(Buttons.newShowExchangeSettingsWizardButton(showExchangeAction), MultiBitUI.LARGE_BUTTON_MIG + ",align center, push");
+    //contentPanel.add(Buttons.newShowExchangeSettingsWizardButton(showExchangeAction), MultiBitUI.LARGE_BUTTON_MIG + ",align center, push");
     contentPanel.add(Buttons.newShowFeeSettingsWizardButton(showFeesAction), MultiBitUI.LARGE_BUTTON_MIG + ",align center,push,wrap");
 
     // Row 2

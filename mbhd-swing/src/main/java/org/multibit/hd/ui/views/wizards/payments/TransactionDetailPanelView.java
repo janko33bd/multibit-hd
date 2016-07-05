@@ -105,7 +105,7 @@ public class TransactionDetailPanelView extends AbstractWizardPanelView<Payments
     contentPanel.add(transactionHashLabel, "wrap");
     contentPanel.add(transactionHashValue, "shrink," + MultiBitUI.WIZARD_MAX_WIDTH_MIG + ",wrap");
 
-    contentPanel.add(blockExplorerBrowserButton, "shrink,alignx left,span 2,wrap");
+    //contentPanel.add(blockExplorerBrowserButton, "shrink,alignx left,span 2,wrap");
 
     contentPanel.add(rawTransactionLabel, "wrap");
     contentPanel.add(scrollPane, "grow,push,span 2," + MultiBitUI.WIZARD_MAX_WIDTH_MIG + ",wrap");
