@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,8 @@ import java.net.URI;
 import java.security.Permission;
 import java.security.PermissionCollection;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * <p>Manager to provide the following to other core classes:</p>
@@ -192,7 +195,7 @@ public class InstallationManager {
       // Work out the source checkpoints (put into the program installation directory by the installer)
       File currentWorkingDirectory = new File(".");
       File sourceBlockCheckpointsFile = new File(currentWorkingDirectory.getAbsolutePath() + File.separator + MBHD_PREFIX + CHECKPOINTS_SUFFIX);
-
+      log.debug("source "+sourceBlockCheckpointsFile.getPath());
       // Prepare an input stream to the checkpoints
       final InputStream sourceCheckpointsStream;
       if (sourceBlockCheckpointsFile.exists()) {
@@ -227,6 +230,8 @@ public class InstallationManager {
       if (bytes < 13_000) {
         log.warn("Checkpoints are short.");
       }
+      
+      
 
     } else {
 
@@ -235,7 +240,7 @@ public class InstallationManager {
     }
   }
 
-  /**
+/**
    * Use for testing only (several different test packages use this)
    *
    * @param currentApplicationDataDirectory the application data directory to use

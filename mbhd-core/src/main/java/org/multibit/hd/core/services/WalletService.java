@@ -600,15 +600,23 @@ public class WalletService extends AbstractService {
 
     StringBuilder description = new StringBuilder();
     if (paymentType == PaymentType.RECEIVING || paymentType == PaymentType.RECEIVED) {
-      String addresses = "";
+    	StringBuilder addresses = new StringBuilder();
 
       boolean descriptiveTextIsAvailable = false;
       if (transaction.getOutputs() != null) {
         for (TransactionOutput transactionOutput : transaction.getOutputs()) {
           if (transactionOutput.isMine(wallet)) {
             // If the output is mine then it is a vanilla isSentToAddress() = true transactionOutput
-            Address receivingAddress = transactionOutput.getScriptPubKey().getToAddress(networkParameters);
-            addresses = addresses + " " + receivingAddress;
+        	  Address receivingAddress = null;
+        	  try{
+        		  receivingAddress = transactionOutput.getScriptPubKey().getToAddress(networkParameters);  
+        	  } catch(ScriptException ex){
+        		  if(wallet.findKeyFromPubKey(transactionOutput.getScriptPubKey().getPubKey()) != null)
+        		  return description.append("staked").toString();
+        	  }
+            
+            
+            addresses.append(" ").append(receivingAddress);
 
             // Check if this output funds any payment requests;
             MBHDPaymentRequestData MBHDPaymentRequestData = mbhdPaymentRequestDataMap.get(receivingAddress);
@@ -642,7 +650,7 @@ public class WalletService extends AbstractService {
         description
                 .append("By")
                 .append(PREFIX_SEPARATOR)
-                .append(addresses.trim());
+                .append(addresses.toString().trim());
       }
     } else {
       // Sent

@@ -182,7 +182,7 @@ private MultiBitPeerEventListener peerEventListener;
       }
       File walletParentDirectory = WalletManager.INSTANCE.getCurrentWalletFile(applicationDataDirectory).get().getParentFile();
 
-      File blockStoreFile = SecureFiles.verifyOrCreateFile(walletParentDirectory, InstallationManager.MBHD_PREFIX + InstallationManager.SPV_BLOCKCHAIN_SUFFIX);
+      File blockStoreFile = new File(walletParentDirectory + "/" +InstallationManager.MBHD_PREFIX + InstallationManager.SPV_BLOCKCHAIN_SUFFIX);
       //File checkpointsFile = SecureFiles.verifyOrCreateFile(walletParentDirectory, InstallationManager.MBHD_PREFIX + InstallationManager.CHECKPOINTS_SUFFIX);
       blockStoreToReturn = new BlockStoreManager(networkParameters).createOrOpenBlockStore(blockStoreFile, null, null, false);
 //      if (replayConfig.getReplayDate().isPresent()) {
@@ -1421,7 +1421,7 @@ private MultiBitPeerEventListener peerEventListener;
       Configurations.currentConfiguration.getCurrentVersion());
 
     peerGroup.setMaxConnections(MAXIMUM_NUMBER_OF_PEERS);
-    //peerGroup.setUseLocalhostPeerWhenPossible(true);
+    peerGroup.setUseLocalhostPeerWhenPossible(false);
 
     peerEventListener = new MultiBitPeerEventListener();
     peerGroup.addEventListener(peerEventListener);
@@ -1629,9 +1629,9 @@ private MultiBitPeerEventListener peerEventListener;
     this.lastWalletOptional = lastWalletOptional;
   }
   
-  public void startStaking(){
+  public void startStaking(String password){
 	  staking = true;
-	  staker = new Staker(networkParameters, peerGroup, WalletManager.INSTANCE.getCurrentWalletSummary().get().getWallet(), getBlockStore(), blockChain);
+	  staker = new Staker(networkParameters, peerGroup, WalletManager.INSTANCE.getCurrentWalletSummary().get().getWallet(), getBlockStore(), blockChain, password);
 	  staker.startAsync();
   }
   

@@ -95,7 +95,7 @@ public class TransactionDetailPanelView extends AbstractWizardPanelView<Payments
     // Raw transaction requires its own scroll pane
     JScrollPane scrollPane = ScrollPanes.newReadOnlyScrollPane(rawTransactionTextArea);
 
-//  BlockExplorer blockExplorer = lookupBlockExplorer();
+    //BlockExplorer blockExplorer = lookupBlockExplorer();
 //    JButton blockExplorerBrowserButton = Buttons.newLaunchBrowserButton(
 //      getBlockExplorerBrowserAction(),
 //      MessageKey.VIEW_IN_BLOCK_EXPLORER,

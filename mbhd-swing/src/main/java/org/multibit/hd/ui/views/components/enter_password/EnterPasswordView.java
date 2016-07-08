@@ -162,7 +162,13 @@ public class EnterPasswordView extends AbstractComponentView<EnterPasswordModel>
     showButton.setEnabled(!visible);
 
   }
+  
+  public void setEnabled(boolean enabled) {
+	    password.setEnabled(enabled);
+	    showButton.setEnabled(enabled);
 
+	  }
+  
   public boolean isAddLabel() {
     return addLabel;
   }

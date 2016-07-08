@@ -2,23 +2,17 @@ package org.multibit.hd.core.managers;
 
 import com.google.common.base.Preconditions;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.bitcoinj.core.CheckpointManager;
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.core.StoredBlock;
-import org.bitcoinj.store.BlockStore;
 import org.bitcoinj.store.BlockStoreException;
 import org.bitcoinj.store.FullPrunedBlockStore;
-import org.bitcoinj.store.MemoryFullPrunedBlockStore;
 import org.blackcoinj.store.H2MVStoreFullPrunedBlockstore;
+import org.blackcoinj.store.LevelDBStoreFullPrunedBlockstore;
 import org.joda.time.DateTime;
-import org.multibit.commons.utils.Dates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Stack;
 
 /**
  * <p>Manager to provide the following to BitcoinNetworkService:</p>
@@ -61,6 +55,7 @@ public class BlockStoreManager {
     //boolean blockStoreCreatedNew = deleteBlockStoreIfRequired(createNew, blockStoreFile);
 
     log.debug("Get or create SPV block store:\n'{}'", blockStoreFile.getAbsolutePath());
+    
     FullPrunedBlockStore blockStore;
     blockStore = new H2MVStoreFullPrunedBlockstore(networkParameters, blockStoreFile.getPath());
 

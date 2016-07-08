@@ -77,6 +77,9 @@ import org.multibit.hd.ui.views.wizards.sign_message.SignMessageWizardModel;
 import org.multibit.hd.ui.views.wizards.sound_settings.SoundSettingsState;
 import org.multibit.hd.ui.views.wizards.sound_settings.SoundSettingsWizard;
 import org.multibit.hd.ui.views.wizards.sound_settings.SoundSettingsWizardModel;
+import org.multibit.hd.ui.views.wizards.stake_blackcoins.StakeBlackcoinState;
+import org.multibit.hd.ui.views.wizards.stake_blackcoins.StakeBlackcoinWizard;
+import org.multibit.hd.ui.views.wizards.stake_blackcoins.StakeBlackcoinWizardModel;
 import org.multibit.hd.ui.views.wizards.units_settings.UnitsSettingsState;
 import org.multibit.hd.ui.views.wizards.units_settings.UnitsSettingsWizard;
 import org.multibit.hd.ui.views.wizards.units_settings.UnitsWizardModel;
@@ -168,7 +171,7 @@ public class Wizards {
   public static StakeBlackcoinWizard newStakeBitcoinWizard() {
 	  log.debug("New 'Stake blackcoin wizard'");
 
-	    return new StakeBlackcoinWizard(new StakeBlackcoinWizardModel(StakeBlackcoinState.START));
+	    return new StakeBlackcoinWizard(new StakeBlackcoinWizardModel(StakeBlackcoinState.START_STAKING));
 	}
 
   /**

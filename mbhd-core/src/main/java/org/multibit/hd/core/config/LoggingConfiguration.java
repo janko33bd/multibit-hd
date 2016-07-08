@@ -59,7 +59,8 @@ public class LoggingConfiguration {
 
     loggers.put("org.multibit", Level.DEBUG);
     loggers.put("com.xeiam", Level.WARN);
-    loggers.put("org.bitcoinj", Level.WARN);
+    loggers.put("org.bitcoinj", Level.INFO);
+    loggers.put("org.blackcoinj.pos", Level.INFO);
   }
 
   public Level getLevel() {
