@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import org.bitcoinj.core.Wallet;
+import org.multibit.hd.core.dto.WalletSummary;
 import org.multibit.hd.core.managers.WalletManager;
 import org.multibit.hd.core.services.BitcoinNetworkService;
 import org.multibit.hd.core.services.CoreServices;
@@ -80,21 +81,27 @@ public class StakeBlackcoinDisplayPaymentRequestPanelView extends AbstractWizard
 	    return new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				              
-				Wallet wallet = WalletManager.INSTANCE.getCurrentWalletSummary().get().getWallet();
-				if(!wallet.calculateAllSpendCandidates().isEmpty() 
-						&& !Strings.isNullOrEmpty(getPanelModel().get().getPasswordModel().getValue())){
-					
-					log.debug(String.valueOf(newComponentPanel.getComponentCount()));
-					Object source = event.getSource();
-	                if (source instanceof JButton) {
-	                    NimbusDecorator.applyThemeColor(Color.GREEN,(JButton)source);
-	                }
-	                enterPasswordMaV.getView().setEnabled(false);
-	                if (!bitcoinNetworkService.isStaking()) {
-						bitcoinNetworkService.startStaking(getPanelModel().get().getPasswordModel().getValue());
+				WalletSummary currentWalletSummary = WalletManager.INSTANCE.getCurrentWalletSummary().get();
+				String enteredPassword = getPanelModel().get().getPasswordModel().getValue();
+				if(enteredPassword.equals(currentWalletSummary.getWalletPassword().getPassword())){
+					Wallet wallet = currentWalletSummary.getWallet();
+					if(!wallet.calculateAllSpendCandidates().isEmpty() 
+							&& !Strings.isNullOrEmpty(getPanelModel().get().getPasswordModel().getValue())){
+						
+						log.debug(String.valueOf(newComponentPanel.getComponentCount()));
+						Object source = event.getSource();
+		                if (source instanceof JButton) {
+		                    NimbusDecorator.applyThemeColor(Color.GREEN,(JButton)source);
+		                }
+		                enterPasswordMaV.getView().setEnabled(false);
+		                if (!bitcoinNetworkService.isStaking()) {
+							bitcoinNetworkService.startStaking(enteredPassword);
+						}
 					}
+				}else{
+					enterPasswordMaV.getView().incorrectPassword();
 				}
+				
 			}
 	    	
 	    };

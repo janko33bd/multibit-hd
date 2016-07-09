@@ -6,7 +6,6 @@ import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.store.BlockStoreException;
 import org.bitcoinj.store.FullPrunedBlockStore;
 import org.blackcoinj.store.H2MVStoreFullPrunedBlockstore;
-import org.blackcoinj.store.LevelDBStoreFullPrunedBlockstore;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
