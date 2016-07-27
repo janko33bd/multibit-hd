@@ -871,7 +871,8 @@ private MultiBitPeerEventListener peerEventListener;
               log.debug("Skipping a transaction output as it is the change address");
             }
           } else {
-            log.debug("Cannot generate a To address (because it is not defined) for  transactionOutput {}", transactionOutput.getHash().toString());
+        	  if (!sendRequestSummary.getSendRequest().get().tx.isCoinStake())
+        		  log.debug("Cannot generate a To address (because it is not defined) for  transactionOutput {}", transactionOutput.getHash().toString());
           }
         } catch (ScriptException se) {
           log.debug("Cannot cast script to Address for transactionOutput: {}", transactionOutput.getHash().toString());

@@ -727,7 +727,8 @@ public class WalletService extends AbstractService {
             log.debug("Cannot generate a To address (because it is not defined) for  transactionOutput {}", transactionOutput.toString());
           }
         } catch (ScriptException se) {
-          log.debug("Could not get a to address for transactionOutput {}", transactionOutput.toString());
+        	if(!transaction.isCoinStake())
+        		log.debug("Could not get a to address for transactionOutput {}", transactionOutput.toString());
         }
       }
     }
