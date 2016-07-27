@@ -724,11 +724,13 @@ public class WalletService extends AbstractService {
           if (script.isSentToAddress() || script.isPayToScriptHash() || script.isSentToRawPubKey()) {
             outputAddresses.add(script.getToAddress(networkParameters));
           } else {
-            log.debug("Cannot generate a To address (because it is not defined) for  transactionOutput {}", transactionOutput.toString());
+        	  if(!transaction.isCoinStake())
+        		  log.debug("Cannot generate a To address (because it is not defined) for  transactionOutput {}", transactionOutput.toString());
           }
         } catch (ScriptException se) {
         	if(!transaction.isCoinStake())
         		log.debug("Could not get a to address for transactionOutput {}", transactionOutput.toString());
+        		
         }
       }
     }
