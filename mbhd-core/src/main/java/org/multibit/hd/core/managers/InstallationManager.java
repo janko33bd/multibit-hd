@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.multibit.hd.core.events.ShutdownEvent;
+import org.multibit.hd.core.files.ZipFiles;
 import org.multibit.commons.files.SecureFiles;
 import org.multibit.hd.core.utils.OSUtils;
 import org.slf4j.Logger;
@@ -194,7 +195,7 @@ public class InstallationManager {
 
       // Work out the source checkpoints (put into the program installation directory by the installer)
       File currentWorkingDirectory = new File(".");
-      File sourceBlockCheckpointsFile = new File(currentWorkingDirectory.getAbsolutePath() + File.separator + MBHD_PREFIX + CHECKPOINTS_SUFFIX);
+      File sourceBlockCheckpointsFile = new File(currentWorkingDirectory.getAbsolutePath() + File.separator + MBHD_PREFIX + CHECKPOINTS_SUFFIX + ".zip");
       log.debug("source "+sourceBlockCheckpointsFile.getPath());
       // Prepare an input stream to the checkpoints
       final InputStream sourceCheckpointsStream;
@@ -230,7 +231,9 @@ public class InstallationManager {
       if (bytes < 13_000) {
         log.warn("Checkpoints are short.");
       }
-      
+      log.info(destinationCheckpointsFile.getAbsolutePath());
+      log.info(destinationCheckpointsFile.getParentFile().getAbsolutePath());
+      ZipFiles.unzip(destinationCheckpointsFile.getAbsolutePath(), destinationCheckpointsFile.getParentFile().getAbsolutePath());
       
 
     } else {

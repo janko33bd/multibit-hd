@@ -5,7 +5,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.store.BlockStoreException;
 import org.bitcoinj.store.FullPrunedBlockStore;
-import org.blackcoinj.store.H2MVStoreFullPrunedBlockstore;
+import org.blackcoinj.store.LevelDBStoreFullPrunedBlockstore;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +56,7 @@ public class BlockStoreManager {
     log.debug("Get or create SPV block store:\n'{}'", blockStoreFile.getAbsolutePath());
     
     FullPrunedBlockStore blockStore;
-    blockStore = new H2MVStoreFullPrunedBlockstore(networkParameters, blockStoreFile.getPath());
+    blockStore = new LevelDBStoreFullPrunedBlockstore(networkParameters, blockStoreFile.getPath());
 
     log.debug("Block store in place. Created new: {}", blockStore);
 

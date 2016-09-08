@@ -777,7 +777,7 @@ public enum WalletManager implements WalletEventListener {
     }
 
     // See if there is a checkpoints file - if not then get the InstallationManager to copy one in
-    File checkpointsFile = new File(walletDirectory.getAbsolutePath() + File.separator + InstallationManager.MBHD_PREFIX + InstallationManager.CHECKPOINTS_SUFFIX);
+    File checkpointsFile = new File(walletDirectory.getAbsolutePath() + File.separator + InstallationManager.MBHD_PREFIX + InstallationManager.CHECKPOINTS_SUFFIX + ".zip");
     InstallationManager.copyCheckpointsTo(checkpointsFile);
 
     // Set up auto-save on the wallet.
